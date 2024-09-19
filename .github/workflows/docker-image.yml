@@ -43,9 +43,3 @@ jobs:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
 
-    runs-on: ubuntu-latest
-    steps:
-      # Deployment to github pages
-      - name: Deploy GitHub Pages site
-        id: deployment
-        uses: actions/deploy-pages@v3
