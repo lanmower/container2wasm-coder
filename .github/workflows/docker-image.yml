@@ -21,7 +21,7 @@ jobs:
       uses: actions/upload-pages-artifact@v2
       with:
           # Path of the directory containing the static assets for our gh pages deployment.
-          path: /out # optional, default is _site/
+          path: / # optional, default is _site/
 
     - name: github release # To upload our final ext2 image as a github release.
       if: ${{ github.event.inputs.GITHUB_RELEASE == 'true' }}
