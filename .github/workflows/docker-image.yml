@@ -31,7 +31,7 @@ jobs:
         tag_name: ext2_image
         fail_on_unmatched_files: 'true' # Fail in case of no matches with the file(s) glob(s).
         files: | # Assets to upload as release.
-          ${{ env.IMAGE_NAME }}
+          /out/amd64-debian-wasi-container.wasm
 
   deploy_to_github_pages: # Job that deploys the github-pages artifact to github-pages.
     if: ${{ github.event.inputs.DEPLOY_TO_GITHUB_PAGES == 'true' }}
