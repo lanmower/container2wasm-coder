@@ -23,22 +23,20 @@ jobs:
           # Path of the directory containing the static assets for our gh pages deployment.
           path: ./out/ # optional, default is _site/
 
-    - name: github release # To upload our final ext2 image as a github release.
-      if: ${{ github.event.inputs.GITHUB_RELEASE == 'true' }}
-      uses: softprops/action-gh-release@v0.1.15
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        target_commitish: ${{ github.sha }} # Last commit on the GITHUB_REF branch or tag
-        tag_name: ext2_image
-        fail_on_unmatched_files: 'true' # Fail in case of no matches with the file(s) glob(s).
-        files: | # Assets to upload as release.
-          ./out/amd64-debian-wasi-container.wasm
-
-  deploy_to_github_pages: # Job that deploys the github-pages artifact to github-pages.
-    if: ${{ github.event.inputs.DEPLOY_TO_GITHUB_PAGES == 'true' }}
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: false
+        prerelease: false
     
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
