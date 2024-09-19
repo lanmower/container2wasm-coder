@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: wget https://github.com/ktock/container2wasm/releases/download/v0.6.5/container2wasm-v0.6.5-linux-amd64.tar.gz && tar -xf container2wasm-v0.6.5-linux-amd64.tar.gz && ./create-images.sh
+      run: export PATH=$PATH:$(pwd) && wget https://github.com/ktock/container2wasm/releases/download/v0.6.5/container2wasm-v0.6.5-linux-amd64.tar.gz && tar -xf container2wasm-v0.6.5-linux-amd64.tar.gz && ./create-images.sh
