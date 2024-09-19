@@ -16,3 +16,38 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: export PATH=$PATH:$(pwd) && wget https://github.com/ktock/container2wasm/releases/download/v0.6.5/container2wasm-v0.6.5-linux-amd64.tar.gz && tar -xf container2wasm-v0.6.5-linux-amd64.tar.gz && ./create-images.sh
+
+    - name: Upload GitHub Pages artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+          # Path of the directory containing the static assets for our gh pages deployment.
+          path: ${{ env.DEPLOY_DIR }} # optional, default is _site/
+
+    - name: github release # To upload our final ext2 image as a github release.
+      if: ${{ github.event.inputs.GITHUB_RELEASE == 'true' }}
+      uses: softprops/action-gh-release@v0.1.15
+      with:
+        target_commitish: ${{ github.sha }} # Last commit on the GITHUB_REF branch or tag
+        tag_name: ext2_image
+        fail_on_unmatched_files: 'true' # Fail in case of no matches with the file(s) glob(s).
+        files: | # Assets to upload as release.
+          ${{ env.IMAGE_NAME }}
+
+  deploy_to_github_pages: # Job that deploys the github-pages artifact to github-pages.
+    if: ${{ github.event.inputs.DEPLOY_TO_GITHUB_PAGES == 'true' }}
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    runs-on: ubuntu-latest
+    steps:
+      # Deployment to github pages
+      - name: Deploy GitHub Pages site
+        id: deployment
+        uses: actions/deploy-pages@v3
