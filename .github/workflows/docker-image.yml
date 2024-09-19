@@ -21,7 +21,7 @@ jobs:
       uses: actions/upload-pages-artifact@v2
       with:
           # Path of the directory containing the static assets for our gh pages deployment.
-          path: ${{ env.DEPLOY_DIR }} # optional, default is _site/
+          path: /out # optional, default is _site/
 
     - name: github release # To upload our final ext2 image as a github release.
       if: ${{ github.event.inputs.GITHUB_RELEASE == 'true' }}
@@ -31,7 +31,7 @@ jobs:
         tag_name: ext2_image
         fail_on_unmatched_files: 'true' # Fail in case of no matches with the file(s) glob(s).
         files: | # Assets to upload as release.
-          /out/amd64-debian-wasi-container.wasm
+          /amd64-debian-wasi-container.wasm
 
   deploy_to_github_pages: # Job that deploys the github-pages artifact to github-pages.
     if: ${{ github.event.inputs.DEPLOY_TO_GITHUB_PAGES == 'true' }}
