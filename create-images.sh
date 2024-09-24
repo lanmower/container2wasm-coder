@@ -5,7 +5,7 @@ set -euo pipefail
 SOURCE=./src/
 DEST=./out/
 WASI_MAX_CHUNK=50MB
-C2W=c2w
+C2W=./c2w
 C2W_EXTRA_FLAGS_V=${C2W_EXTRA_FLAGS:-}
 
 # /image : image name
