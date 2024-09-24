@@ -1,7 +1,8 @@
 #!/bin/bash
 
 set -euo pipefail
-
+wget https://github.com/ktock/container2wasm/releases/download/v0.6.5/container2wasm-v0.6.5-linux-amd64.tar.gz
+tar -xf container2wasm-v0.6.5-linux-amd64.tar.gz
 SOURCE=./src/
 DEST=./out/
 WASI_MAX_CHUNK=50MB
