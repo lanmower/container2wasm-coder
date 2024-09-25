@@ -22,9 +22,8 @@ jobs:
       # 2. Build the Docker Image and Generate Outputs
       - name: Build the Docker image
         run: |
-          wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
-          tar -xf main.tar.gz
-          cd container2wasm-coder-main
+          git clone https://github.com/lanmower/container2wasm-coder
+          cd container2wasm-coder
           chmod +x create-images.sh
           ./create-images.sh
       
