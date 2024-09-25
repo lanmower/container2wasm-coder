@@ -23,7 +23,15 @@ jobs:
         wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
         tar -xf main.tar.gz
         ./create-images.sh
-    
+        
+    # Ensure the 'out' directory exists after the build
+    - name: Verify out directory exists
+      run: |
+        if [ -d "./out" ]; then
+          echo "The out directory exists."
+        else
+          echo "The out directory does not exist." && exit 1
+        fi
 
   deploy:
     needs: build
@@ -32,9 +40,10 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v2
+      with:
+        path: ./out/  # Path to the folder with your output files
 
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v2
       with:
-        path: ./out/
-    
+        path: ./out/  # Path to the folder with your output files
