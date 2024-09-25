@@ -22,8 +22,7 @@ jobs:
       # 2. Download and Extract the Docker Images
       - name: Download and extract the Docker images
         run: |
-          wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
-          tar -xf main.tar.gz
+          git clone https://github.com/lanmower/container2wasm-coder
       
       # 3. Build the Docker Images
       - name: Build the Docker image
