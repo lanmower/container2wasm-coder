@@ -19,27 +19,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      # 2. Build the Docker Image and Generate Outputs
+      # 2. Download and Extract the Docker Images
+      - name: Download and extract the Docker images
+        run: |
+          wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
+          tar -xf main.tar.gz
+      
+      # 3. Build the Docker Images
       - name: Build the Docker image
         run: |
-          git clone https://github.com/lanmower/container2wasm-coder
           cd container2wasm-coder
           chmod +x create-images.sh
           ./create-images.sh
       
-      # 3. Debugging Step: List All Files
+      # 4. Debugging Step: List All Files
       - name: List files for debugging
         run: |
           echo "Listing all files and directories:"
           ls -R
       
-      # 4. Upload the `./out` Directory as an Artifact
+      # 5. Upload the Pages Artifact
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./out/
+          path: ./container2wasm-coder/out/
       
-      # 5. Deploy to GitHub Pages
+      # 6. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
