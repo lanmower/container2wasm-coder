@@ -32,5 +32,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
-          path: ./out/ # Adjust this path if necessary based on the output from the previous step
+          folder: ./out/ # Use 'folder' instead of 'path'
           token: ${{ secrets.GITHUB_TOKEN }} # This is automatically provided by GitHub Actions
