@@ -31,12 +31,6 @@ jobs:
           chmod +x create-images.sh
           ./create-images.sh
       
-      # 4. Debugging Step: List All Files
-      - name: List files for debugging
-        run: |
-          echo "Listing all files and directories:"
-          ls -R
-      
       # 5. Upload the Pages Artifact
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v1
