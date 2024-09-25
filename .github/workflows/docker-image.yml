@@ -15,14 +15,22 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
       - name: Build the Docker image
         run: |
           wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
           tar -xf main.tar.gz
           ./create-images.sh
+      
+      - name: Prepare output directory
+        run: |
+          mkdir -p out # Make sure the directory exists
+          mv ./out/* out/ # Move the contents to out directory if required
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
           path: ./out/
-          token: ${{ secrets.GITHUB_TOKEN }}  # This is automatically provided by GitHub Actions
+          token: ${{ secrets.GITHUB_TOKEN }} # This is automatically provided by GitHub Actions
