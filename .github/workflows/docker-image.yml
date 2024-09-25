@@ -16,25 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/docker
-            /tmp/.buildx-cache
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/requirements.txt') }} # Use specific files to create a stable key
-          restore-keys: |
-            ${{ runner.os }}-docker-
-        
       - name: Build the Docker image
         run: |
           wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
           tar -xf main.tar.gz
           ./create-images.sh
-
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
-          path: ./out/  # Directly specify the path to your `out` directory
+          path: ./out/
           token: ${{ secrets.GITHUB_TOKEN }}  # This is automatically provided by GitHub Actions
