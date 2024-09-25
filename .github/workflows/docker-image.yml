@@ -18,14 +18,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Build the Docker image
+      - name: Download and extract the Docker images
         run: |
           wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
           tar -xf main.tar.gz
           ./create-images.sh
-      
+
+      # Ensure that the output directory exists and print the contents for debugging
+      - name: List files for debugging
+        run: |
+          ls -R # List all files for debugging
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
-          path: ./out/
+          path: ./out/ # Adjust this path if necessary based on the output from the previous step
           token: ${{ secrets.GITHUB_TOKEN }} # This is automatically provided by GitHub Actions
