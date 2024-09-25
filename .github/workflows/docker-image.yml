@@ -15,22 +15,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # 1. Checkout the Repository
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Download and extract the Docker images
+      # 2. Build the Docker Image and Generate Outputs
+      - name: Build the Docker image
         run: |
           wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
           tar -xf main.tar.gz
+          cd container2wasm-coder-main
+          chmod +x create-images.sh
           ./create-images.sh
-
-      # Ensure that the output directory exists and print the contents for debugging
+      
+      # 3. Debugging Step: List All Files
       - name: List files for debugging
         run: |
-          ls -R # List all files for debugging
-
+          echo "Listing all files and directories:"
+          ls -R
+      
+      # 4. Upload the `./out` Directory as an Artifact
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./out/
+      
+      # 5. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
-          folder: ./out/ # Use 'folder' instead of 'path'
-          token: ${{ secrets.GITHUB_TOKEN }} # This is automatically provided by GitHub Actions
+          token: ${{ secrets.GITHUB_TOKEN }}
