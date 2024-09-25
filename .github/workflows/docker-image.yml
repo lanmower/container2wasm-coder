@@ -24,11 +24,6 @@ jobs:
           tar -xf main.tar.gz
           ./create-images.sh
       
-      - name: Prepare output directory
-        run: |
-          mkdir -p out # Make sure the directory exists
-          mv ./out/* out/ # Move the contents to out directory if required
-
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
