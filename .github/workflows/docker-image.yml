@@ -23,7 +23,7 @@ jobs:
           path: |
             ~/.cache/docker
             /tmp/.buildx-cache
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile', '**/requirements.txt') }} # Use specific files to create a stable key
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/requirements.txt') }} # Use specific files to create a stable key
           restore-keys: |
             ${{ runner.os }}-docker-
         
