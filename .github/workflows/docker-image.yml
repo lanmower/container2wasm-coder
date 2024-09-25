@@ -10,6 +10,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: write # Give permission to delete artifacts
 
 jobs:
   build:
@@ -42,3 +43,18 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clean up old artifacts
+        run: |
+          echo "Cleaning up old artifacts..."
+          DAYS_TO_KEEP=7
+          DATE=$(date --date="$DAYS_TO_KEEP days ago" +%Y-%m-%d)
+          for artifact in $(gh api repos/:owner/:repo/actions/artifacts --jq '.artifacts[] | select(.created_at < "'$DATE'T00:00:00Z") | .id'); do
+            echo "Deleting artifact $artifact"
+            gh api repos/:owner/:repo/actions/artifacts/$artifact -X DELETE
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
