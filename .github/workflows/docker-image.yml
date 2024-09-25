@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: write
@@ -26,38 +26,32 @@ jobs:
           key: ${{ runner.os }}-docker-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-docker-
-
+        
       - name: Build the Docker image
         run: |
           wget https://github.com/lanmower/container2wasm-coder/archive/refs/tags/main.tar.gz
           tar -xf main.tar.gz
           ./create-images.sh
-        
+      
       # Ensure the 'out' directory exists after the build
       - name: Verify out directory exists
+        id: verify_out
         run: |
           if [ -d "./out" ]; then
             echo "The out directory exists."
           else
             echo "The out directory does not exist." && exit 1
           fi
-      
-      - name: Upload output artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: out-artifact
-          path: ./out/
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Download output artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: out-artifact
-    
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # This will be automatically provided by GitHub Actions
+          path: ./out/  # Directly specify the path to your `out` directory
+          token: ${{ secrets.GITHUB_TOKEN }}  # This is automatically provided by GitHub Actions
