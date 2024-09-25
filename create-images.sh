@@ -47,5 +47,6 @@ do
         fi
         split -d -b "${WASI_MAX_CHUNK}" --additional-suffix=.wasm "${DEST}/${OUTPUT_NAME}.wasm" "${DEST}/${OUTPUT_NAME}"
         rm "${DEST}/${OUTPUT_NAME}.wasm"
+        cp ./docs/* ${DEST}
     fi
 done
