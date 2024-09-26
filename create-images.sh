@@ -17,7 +17,7 @@ C2W_EXTRA_FLAGS_V=${C2W_EXTRA_FLAGS:-}
 for I in $(ls -1 ${SOURCE}) ;
 do
     OUTPUT_NAME="${I}-container"
-    rm -r /tmp/*
+    sudo rm -r /tmp/*
     if [ $(cat "${SOURCE}/${I}/target" || true) == "emscripten" ] ; then
         TARGETARCH=$(cat "${SOURCE}/${I}/arch" || true)
         if [ "${TARGETARCH}" == "" ] ; then
