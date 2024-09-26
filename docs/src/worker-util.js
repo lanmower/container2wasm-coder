@@ -21,7 +21,7 @@ function serveIfInitMsg(msg) {
             }
             if (req_.imagename)
                 imagename = req_.imagename;
-            numchunks = req_.chunks;
+            numchunks = 17;
             return true;
         }
     }
