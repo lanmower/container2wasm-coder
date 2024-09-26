@@ -46,6 +46,8 @@ do
             echo "no image source found for ${I}"
             exit 1
         fi
+        sudo rm -r /tmp/*
+        rm ./c2w*
         split -d -b "${WASI_MAX_CHUNK}" --additional-suffix=.wasm "${DEST}/${OUTPUT_NAME}.wasm" "${DEST}/${OUTPUT_NAME}"
         rm "${DEST}/${OUTPUT_NAME}.wasm"
         mv ./docs/* ${DEST}
