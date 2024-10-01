@@ -1,4 +1,4 @@
-FROM debian:slim AS juce_dev_machine
+FROM debian:sid-slim AS juce_dev_machine
 
 # Install essential tools and dependencies in one step to minimize layers
 RUN apt-get update && \
