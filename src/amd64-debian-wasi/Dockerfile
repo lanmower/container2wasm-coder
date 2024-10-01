@@ -1,4 +1,4 @@
-FROM debian:slim-sid AS base
+FROM debian:sid-slim AS base
 
 # Update and install necessary packages
 RUN apt-get update && \
