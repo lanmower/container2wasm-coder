@@ -1,5 +1,5 @@
 # Stage 1: Build stage with full development environment
-FROM debian:slim AS build
+FROM debian:sid-slim AS build
 
 # Install required packages and tools in one step to minimize layers
 RUN apt-get update && \
