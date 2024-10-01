@@ -36,7 +36,7 @@ RUN apt-get update && \
     libwoff1 \
     libwebp6 \
     libwebsockets-dev \ # Changed from libwebsockets15 to libwebsockets-dev
-    libwebkit2gtk-4.0-dev && \
+    libwebkit2gtk-4.0-dev \
     wget https://apt.llvm.org/llvm.sh && \
     chmod +x llvm.sh && \
     ./llvm.sh 11 && \
