@@ -1,4 +1,4 @@
-FROM debian:sid-slim
+FROM debian:sid-slim AS base
 
 FROM base AS juce_dev_machine
 
