@@ -1,1 +1,32 @@
-FROM docker.io/eyalamirmusic/juce_dev_machine:latest AS base
+FROM debian:sid-slim
+
+FROM base AS juce_dev_machine
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    git \
+    clang-11 \
+    cmake \
+    ninja-build \
+    pkg-config \
+    openssh-client \
+    libjack-jackd2-dev \
+    ladspa-sdk \
+    libcurl4-openssl-dev  \
+    libfreetype6-dev \
+    libx11-dev  \
+    libxcomposite-dev  \
+    libxcursor-dev  \
+    libxext-dev  \
+    libxinerama-dev  \
+    libxrandr-dev \
+    libxrender-dev \
+    libwebkit2gtk-4.0-dev \
+    libglu1-mesa-dev  \
+    mesa-common-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Make sure clang is the default compiler:
+RUN update-alternatives --install /usr/bin/cc cc /usr/bin/clang-11 100 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-11 100
