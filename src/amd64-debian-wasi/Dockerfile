@@ -35,7 +35,7 @@ RUN apt-get update && \
     libsqlite3-0 \
     libwoff1 \
     libwebp6 \
-    libwebsockets-dev \ # Changed from libwebsockets15 to libwebsockets-dev
+    libwebsockets-dev \
     libwebkit2gtk-4.0-dev \
     wget https://apt.llvm.org/llvm.sh && \
     chmod +x llvm.sh && \
