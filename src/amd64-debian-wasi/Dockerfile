@@ -1,4 +1,4 @@
-FROM debian:slim AS juce_dev_machine
+FROM debian:sid-slim AS juce_dev_machine
 
 # Install essential tools for adding repositories
 RUN apt-get update && \
