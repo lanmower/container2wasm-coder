@@ -1,4 +1,4 @@
-FROM debian:sid-slim AS juce_dev_machine
+FROM debian:slim AS juce_dev_machine
 
 # Install essential tools for adding repositories
 RUN apt-get update && \
@@ -38,6 +38,16 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install graphics and font dependencies without specific version pinning
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libfreetype-dev \
+    libfreetype6 \
+    libglu1-mesa-dev \
+    mesa-common-dev \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Install network and UI dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -50,17 +60,6 @@ RUN apt-get update && \
     libxrandr-dev \
     libxrender-dev \
     libwebkit2gtk-4.0-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Install graphics and font dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libfreetype6=2.10.4+dfsg-1+deb11u1 \
-    libfreetype-dev=2.10.4+dfsg-1+deb11u1 \
-    libfreetype6-dev=2.10.4+dfsg-1+deb11u1 \
-    libglu1-mesa-dev \
-    mesa-common-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
