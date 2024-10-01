@@ -1,4 +1,4 @@
-FROM debian:sid-slim AS juce_dev_machine
+FROM debian:slim AS juce_dev_machine
 
 # Install essential tools for adding repositories
 RUN apt-get update && \
@@ -53,10 +53,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install graphics and font dependencies, pin specific version of libfreetype6-dev
+# Install graphics and font dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libfreetype6=2.10.4+dfsg-1+deb11u1 \
+    libfreetype-dev=2.10.4+dfsg-1+deb11u1 \
     libfreetype6-dev=2.10.4+dfsg-1+deb11u1 \
     libglu1-mesa-dev \
     mesa-common-dev && \
