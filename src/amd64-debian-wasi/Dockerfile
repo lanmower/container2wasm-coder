@@ -1,4 +1,4 @@
-FROM node:20-debian
+FROM node:20
 WORKDIR /app
 EXPOSE 3000
 CMD ["bash"]
